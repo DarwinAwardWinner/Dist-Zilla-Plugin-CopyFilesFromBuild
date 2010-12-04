@@ -48,7 +48,7 @@ In your dist.ini:
 
     [CopyFilesFromBuild]
     file = README
-    file = README.md
+    file = README.mkdn
     file = Makefile.PL
 
 =head1 DESCRIPTION
