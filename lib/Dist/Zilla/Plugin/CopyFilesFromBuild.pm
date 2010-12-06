@@ -58,6 +58,11 @@ This plugin will automatically copy the files that you specify in
 dist.ini from the build directory into the distribution directoory.
 This is so you can commit them to version control.
 
+This plugin is based on CopyReadmeFromBuild. I wrote it because that
+plugin was copying the wrong README file (README instead of
+README.mkdn), and it could not be configured to do otherwise. So I
+write my own module that copies exactly the files that I specify.
+
 =for Pod::Coverage after_build mvp_multivalue_args
 
 =head1 BUGS AND LIMITATIONS
