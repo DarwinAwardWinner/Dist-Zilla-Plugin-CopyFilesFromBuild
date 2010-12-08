@@ -15,7 +15,6 @@ use File::Copy qw/ copy /;
 # accept some arguments multiple times.
 sub mvp_multivalue_args { qw{ file } }
 
-has copyright => ( ro, default => 1 );
 has files => (
     ro, lazy, auto_deref,
     isa        => 'ArrayRef[Str]',

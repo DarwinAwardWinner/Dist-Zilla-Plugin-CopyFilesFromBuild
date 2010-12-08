@@ -1,0 +1,4 @@
+Revision history for Perl extension {{$dist->name}}
+
+{{$NEXT}}
+    - Initial CPAN release
