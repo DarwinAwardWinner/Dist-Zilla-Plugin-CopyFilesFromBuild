@@ -1,12 +1,14 @@
-# NAME
+=pod
+
+=head1 NAME
 
 Dist::Zilla::Plugin::CopyFilesFromBuild - Copy specific files after building (for SCM inclusion, etc.)
 
-# VERSION
+=head1 VERSION
 
-version 0.103420
+version 0.103440
 
-# SYNOPSIS
+=head1 SYNOPSIS
 
 In your dist.ini:
 
@@ -15,7 +17,7 @@ In your dist.ini:
     file = README.mkdn
     file = Makefile.PL
 
-# DESCRIPTION
+=head1 DESCRIPTION
 
 This plugin will automatically copy the files that you specify in
 dist.ini from the build directory into the distribution directoory.
@@ -26,18 +28,24 @@ plugin was copying the wrong README file (README instead of
 README.mkdn), and it could not be configured to do otherwise. So I
 write my own module that copies exactly the files that I specify.
 
-# BUGS AND LIMITATIONS
+=for Pod::Coverage after_build mvp_multivalue_args
+
+=head1 BUGS AND LIMITATIONS
 
 Please report any bugs or feature requests to
-`rct+perlbug@thompsonclan.org`.
+C<rct+perlbug@thompsonclan.org>.
 
-# SEE ALSO
+=head1 SEE ALSO
 
-- *
+=over 4
 
-[Dist::Zilla::Plugin::CopyReadmeFromBuild](http://search.cpan.org/perldoc?Dist::Zilla::Plugin::CopyReadmeFromBuild) - The basis for this module
+=item *
 
-# DISCLAIMER OF WARRANTY
+L<Dist::Zilla::Plugin::CopyReadmeFromBuild> - The basis for this module
+
+=back
+
+=head1 DISCLAIMER OF WARRANTY
 
 BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
 FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN
@@ -60,13 +68,14 @@ FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
 SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
 SUCH DAMAGES.
 
-# AUTHOR
+=head1 AUTHOR
 
 Ryan C. Thompson <rct@thompsonclan.org>
 
-# COPYRIGHT AND LICENSE
+=head1 COPYRIGHT AND LICENSE
 
 This software is copyright (c) 2010 by Ryan C. Thompson.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
+
