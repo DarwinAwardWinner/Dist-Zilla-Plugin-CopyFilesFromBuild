@@ -2,26 +2,31 @@
 
 =head1 NAME
 
-Dist::Zilla::Plugin::CopyFilesFromBuild - Copy specific files after building (for SCM inclusion, etc.)
+Dist::Zilla::Plugin::CopyFilesFromBuild - Copy (or move) specific files after building (for SCM inclusion, etc.)
 
 =head1 VERSION
 
-version 0.103440
+version 0.103450
 
 =head1 SYNOPSIS
 
 In your dist.ini:
 
     [CopyFilesFromBuild]
-    file = README
-    file = README.mkdn
-    file = Makefile.PL
+    copy = README
+    move = README.pod
+    copy = Makefile.PL
 
 =head1 DESCRIPTION
 
 This plugin will automatically copy the files that you specify in
 dist.ini from the build directory into the distribution directoory.
-This is so you can commit them to version control.
+This is so you can commit them to version control. If you want to put
+a build-generated file in version control but you I<don't> want it to
+remain in the build dir, use C<move> instead of C<copy>. When you use
+C<move>, the F<MANIFEST> file will be updated if it exists.
+
+=head1 RATIONALE
 
 This plugin is based on CopyReadmeFromBuild. I wrote it because that
 plugin was copying the wrong README file (README instead of

@@ -4,21 +4,29 @@ use v5.10;
 use utf8;
 
 package Dist::Zilla::Plugin::CopyFilesFromBuild;
-# ABSTRACT: Copy specific files after building (for SCM inclusion, etc.)
+# ABSTRACT: Copy (or move) specific files after building (for SCM inclusion, etc.)
 
 use Moose;
 use MooseX::Has::Sugar;
+use Moose::Autobox;
 with qw/ Dist::Zilla::Role::AfterBuild /;
 
-use File::Copy qw/ copy /;
-
+use File::Copy ();
+# use File::Slurp qw( read_file write_file );
+use List::AllUtils qw( any );
+use Set::Scalar;
 # accept some arguments multiple times.
-sub mvp_multivalue_args { qw{ file } }
+sub mvp_multivalue_args { qw{ copy move } }
 
-has files => (
-    ro, lazy, auto_deref,
+has copy => (
+    ro, lazy,
     isa        => 'ArrayRef[Str]',
-    init_arg   => 'file',
+    default    => sub { [] },
+);
+
+has move => (
+    ro, lazy,
+    isa        => 'ArrayRef[Str]',
     default    => sub { [] },
 );
 
@@ -27,12 +35,66 @@ sub after_build {
     my $data = shift;
 
     my $build_root = $data->{build_root};
-    for(@{$self->files}) {
+    for(@{$self->copy}) {
         my $src = $build_root->file( $_ );
         if (-e $src) {
             my $dest = $self->zilla->root->file( $src->basename );
-            copy "$src", "$dest" or die "Unable to copy $src to $dest: $!";
+            File::Copy::copy "$src", "$dest"
+                or $self->log_fatal("Unable to copy $src to $dest: $!");
+            $self->log("Copied $src to $dest");
         }
+    }
+
+    for(@{$self->move}) {
+        my $src = $build_root->file( $_ );
+        if (-e $src) {
+            my $dest = $self->zilla->root->file( $src->basename );
+            File::Copy::move "$src", "$dest"
+                or $self->log_fatal("Unable to move $src to $dest: $!");
+            $self->log("Moved $src to $dest");
+        }
+    }
+
+    # Horrible hacks. Oh well.
+    $self->_prune_moved_files();
+    $self->_filter_manifest($build_root);
+}
+
+sub _prune_moved_files {
+    my ($self, ) = @_;
+    for my $file ($self->zilla->files->flatten) {
+        next unless any { $file->name eq $_ } @{$self->move};
+
+        $self->log_debug([ 'pruning moved file %s', $file->name ]);
+
+        $self->zilla->prune_file($file);
+    }
+}
+
+sub _read_manifest {
+    my ($self, $manifest_filename) = @_;
+    my $input = IO::File->new($manifest_filename);
+    my @lines = $input->getlines;
+    chomp @lines;
+    return @lines;
+}
+
+sub _write_manifest {
+    my ($self, $manifest_filename, @contents) = @_;
+    my $output = IO::File->new($manifest_filename, 'w');
+    $output->print(join("\n", (sort @contents)), "\n");
+}
+
+sub _filter_manifest {
+    my ($self, $build_root) = @_;
+    if (@{$self->move}) {
+        my $manifest_file = $build_root->file( 'MANIFEST' );
+        return unless -e $manifest_file;
+        my $files = Set::Scalar->new($self->_read_manifest($manifest_file));
+        my $moved_files = Set::Scalar->new(@{$self->move});
+        my $filtered_files = $files->difference($moved_files);
+        $self->log_debug("Rewriting MANIFEST to remove moved files");
+        $self->_write_manifest($manifest_file, $filtered_files->members);
     }
 }
 
@@ -46,16 +108,20 @@ __END__
 In your dist.ini:
 
     [CopyFilesFromBuild]
-    file = README
-    file = README.mkdn
-    file = Makefile.PL
+    copy = README
+    move = README.pod
+    copy = Makefile.PL
 
 =head1 DESCRIPTION
 
-
 This plugin will automatically copy the files that you specify in
 dist.ini from the build directory into the distribution directoory.
-This is so you can commit them to version control.
+This is so you can commit them to version control. If you want to put
+a build-generated file in version control but you I<don't> want it to
+remain in the build dir, use C<move> instead of C<copy>. When you use
+C<move>, the F<MANIFEST> file will be updated if it exists.
+
+=head1 RATIONALE
 
 This plugin is based on CopyReadmeFromBuild. I wrote it because that
 plugin was copying the wrong README file (README instead of
