@@ -45,19 +45,24 @@ sub after_build {
         }
     }
 
+    my $moved_something = 0;
+
     for(@{$self->move}) {
         my $src = $build_root->file( $_ );
         if (-e $src) {
             my $dest = $self->zilla->root->file( $src->basename );
             File::Copy::move "$src", "$dest"
                 or $self->log_fatal("Unable to move $src to $dest: $!");
+            $moved_something++;
             $self->log("Moved $src to $dest");
         }
     }
 
-    # Horrible hacks. Oh well.
-    $self->_prune_moved_files();
-    $self->_filter_manifest($build_root);
+    if ($moved_something) {
+        # Horrible hacks. Oh well.
+        $self->_prune_moved_files();
+        $self->_filter_manifest($build_root);
+    }
 }
 
 sub _prune_moved_files {
