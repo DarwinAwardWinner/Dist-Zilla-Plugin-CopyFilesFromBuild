@@ -59,7 +59,8 @@ sub after_build {
     }
 
     if ($moved_something) {
-        # Horrible hacks. Oh well.
+        # These are probably horrible hacks. If so, please tell me a
+        # better way.
         $self->_prune_moved_files();
         $self->_filter_manifest($build_root);
     }
@@ -98,7 +99,7 @@ sub _filter_manifest {
         my $files = Set::Scalar->new($self->_read_manifest($manifest_file));
         my $moved_files = Set::Scalar->new(@{$self->move});
         my $filtered_files = $files->difference($moved_files);
-        $self->log_debug("Rewriting MANIFEST to remove moved files");
+        $self->log_debug("Removing moved files from MANIFEST");
         $self->_write_manifest($manifest_file, $filtered_files->members);
     }
 }
@@ -121,17 +122,27 @@ In your dist.ini:
 
 This plugin will automatically copy the files that you specify in
 dist.ini from the build directory into the distribution directoory.
-This is so you can commit them to version control. If you want to put
-a build-generated file in version control but you I<don't> want it to
-remain in the build dir, use C<move> instead of C<copy>. When you use
-C<move>, the F<MANIFEST> file will be updated if it exists.
+This is so you can commit them to version control.
+
+If you want to put a build-generated file in version control but you
+I<don't> want it to I<remain> in the build dir, use C<move> instead of
+C<copy>. When you use C<move>, the F<MANIFEST> file will be updated if
+it exists, and the moved files will be pruned from their former
+location.
 
 =head1 RATIONALE
 
 This plugin is based on CopyReadmeFromBuild. I wrote it because that
-plugin was copying the wrong README file (README instead of
-README.mkdn), and it could not be configured to do otherwise. So I
-write my own module that copies exactly the files that I specify.
+plugin was copying the wrong README file (F<README> instead of
+F<README.mkdn> or F<README.pod>), and it could not be configured to do
+otherwise. So I wrote my own module that copies exactly the files that
+I specify.
+
+I added the C<move> functionality because I wanted to generate a
+F<README.pod> file for Github, but MakeMaker wanted to also install
+the README.pod file as part of the distribution. So I made it possible
+to take a file generated during the build and move it I<out> of the
+build directory, so that it would not be included in the distribution.
 
 =for Pod::Coverage after_build mvp_multivalue_args
 
