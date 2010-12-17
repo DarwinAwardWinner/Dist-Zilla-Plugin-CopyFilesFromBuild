@@ -1,6 +1,8 @@
 Revision history for Perl extension {{$dist->name}}
 
 {{$NEXT}}
+
+0.103510  2010-12-17 12:15:07 EST5EDT
     - Removed unnecessary dependency on Perl 5.10
 
 0.103420  2010-12-08 13:33:09 PST8PDT
