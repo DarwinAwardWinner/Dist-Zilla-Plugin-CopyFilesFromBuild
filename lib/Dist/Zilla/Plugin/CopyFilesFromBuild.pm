@@ -1,6 +1,5 @@
 use strict;
 use warnings;
-use v5.10;
 use utf8;
 
 package Dist::Zilla::Plugin::CopyFilesFromBuild;
