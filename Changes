@@ -2,6 +2,9 @@ Revision history for Perl extension {{$dist->name}}
 
 {{$NEXT}}
 
+0.142220  2014-08-10 16:48:00PDT-0700 America/Los_Angeles (TRIAL RELEASE)
+    - Skip file names that are empty strings 
+
 0.103510  2010-12-17 12:15:07 EST5EDT
     - Removed unnecessary dependency on Perl 5.10
 
