@@ -34,8 +34,11 @@ sub after_build {
     my $data = shift;
 
     my $build_root = $data->{build_root};
-    for(@{$self->copy}) {
-        my $src = $build_root->file( $_ );
+    for my $path (@{$self->copy}) {
+        if ($path eq '') {
+            next;
+        }
+        my $src = $build_root->file( $path );
         if (-e $src) {
             my $dest = $self->zilla->root->file( $src->basename );
             File::Copy::copy "$src", "$dest"
@@ -46,8 +49,11 @@ sub after_build {
 
     my $moved_something = 0;
 
-    for(@{$self->move}) {
-        my $src = $build_root->file( $_ );
+    for my $path (@{$self->move}) {
+        if ($path eq '') {
+            next;
+        }
+        my $src = $build_root->file( $path );
         if (-e $src) {
             my $dest = $self->zilla->root->file( $src->basename );
             File::Copy::move "$src", "$dest"
