@@ -7,7 +7,6 @@ package Dist::Zilla::Plugin::CopyFilesFromBuild;
 
 use Moose;
 use MooseX::Has::Sugar;
-use Moose::Autobox;
 with qw/ Dist::Zilla::Role::AfterBuild /;
 
 use File::Copy ();
@@ -73,7 +72,7 @@ sub after_build {
 
 sub _prune_moved_files {
     my ($self, ) = @_;
-    for my $file ($self->zilla->files->flatten) {
+    for my $file (@{ $self->zilla->files }) {
         next unless any { $file->name eq $_ } @{$self->move};
 
         $self->log_debug([ 'pruning moved file %s', $file->name ]);

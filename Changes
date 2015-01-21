@@ -1,6 +1,7 @@
 Revision history for Perl extension {{$dist->name}}
 
 {{$NEXT}}
+    - Avoid using Moose::Autobox (kentnl, #1)
 
 0.142220  2014-08-10 16:48:00PDT-0700 America/Los_Angeles (TRIAL RELEASE)
     - Skip file names that are empty strings 
