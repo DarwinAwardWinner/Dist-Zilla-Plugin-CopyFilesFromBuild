@@ -1,6 +1,7 @@
 Revision history for Perl extension {{$dist->name}}
 
 {{$NEXT}}
+    - Avoid using Moose::Autobox (kentnl, #1)
 
 0.150250  2015-01-25 12:41:57PST-0800 America/Los_Angeles
     - Avoid using Moose::Autobox (kentnl, #1)
