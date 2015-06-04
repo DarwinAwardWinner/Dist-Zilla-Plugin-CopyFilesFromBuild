@@ -11,7 +11,7 @@ with qw/ Dist::Zilla::Role::AfterBuild /;
 
 use File::Copy ();
 # use File::Slurp qw( read_file write_file );
-use List::AllUtils qw( any );
+use List::Util 1.33 qw( any );
 use Set::Scalar;
 # accept some arguments multiple times.
 sub mvp_multivalue_args { qw{ copy move } }
