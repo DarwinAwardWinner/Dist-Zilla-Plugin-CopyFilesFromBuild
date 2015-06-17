@@ -2,6 +2,9 @@ Revision history for Perl extension {{$dist->name}}
 
 {{$NEXT}}
 
+0.151680  2015-06-17 15:22:02-07:00 America/Los_Angeles
+    - use List::Util instead of List::AllUtils+List::MoreUtils
+
 0.150250  2015-01-25 12:41:57PST-0800 America/Los_Angeles
     - Avoid using Moose::Autobox (kentnl, #1)
 
