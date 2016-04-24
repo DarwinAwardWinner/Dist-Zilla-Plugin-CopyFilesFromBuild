@@ -10,9 +10,10 @@ use MooseX::Has::Sugar;
 with qw/ Dist::Zilla::Role::AfterBuild /;
 
 use File::Copy ();
-# use File::Slurp qw( read_file write_file );
 use List::Util 1.33 qw( any );
+use Path::Tiny;
 use Set::Scalar;
+
 # accept some arguments multiple times.
 sub mvp_multivalue_args { qw{ copy move } }
 
@@ -39,7 +40,7 @@ sub after_build {
         }
         my $src = $build_root->file( $path );
         if (-e $src) {
-            my $dest = $self->zilla->root->file( $src->basename );
+            my $dest = path($self->zilla->root)->child( $src->basename );
             File::Copy::copy "$src", "$dest"
                 or $self->log_fatal("Unable to copy $src to $dest: $!");
             $self->log("Copied $src to $dest");
