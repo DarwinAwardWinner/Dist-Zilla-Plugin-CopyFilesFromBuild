@@ -38,7 +38,7 @@ sub after_build {
         if ($path eq '') {
             next;
         }
-        my $src = $build_root->file( $path );
+        my $src = path($build_root)->child( $path );
         if (-e $src) {
             my $dest = path($self->zilla->root)->child( $src->basename );
             File::Copy::copy "$src", "$dest"
@@ -53,9 +53,9 @@ sub after_build {
         if ($path eq '') {
             next;
         }
-        my $src = $build_root->file( $path );
+        my $src = path($build_root)->child( $path );
         if (-e $src) {
-            my $dest = $self->zilla->root->file( $src->basename );
+            my $dest = path($self->zilla->root)->child( $src->basename );
             File::Copy::move "$src", "$dest"
                 or $self->log_fatal("Unable to move $src to $dest: $!");
             $moved_something++;
@@ -99,7 +99,7 @@ sub _write_manifest {
 sub _filter_manifest {
     my ($self, $build_root) = @_;
     if (@{$self->move}) {
-        my $manifest_file = $build_root->file( 'MANIFEST' );
+        my $manifest_file = path($build_root)->child( 'MANIFEST' );
         return unless -e $manifest_file;
         my $files = Set::Scalar->new($self->_read_manifest($manifest_file));
         my $moved_files = Set::Scalar->new(@{$self->move});
