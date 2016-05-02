@@ -2,6 +2,9 @@ Revision history for Perl extension {{$dist->name}}
 
 {{$NEXT}}
 
+0.161230  2016-05-02 16:36:32-07:00 America/Los_Angeles (TRIAL RELEASE)
+    - Update for Dist::Zilla v7 compatibility, for real this time
+
 0.161150  2016-04-24 11:00:49-07:00 America/Los_Angeles
     - Update for Dist::Zilla v7 compatibility.
 
