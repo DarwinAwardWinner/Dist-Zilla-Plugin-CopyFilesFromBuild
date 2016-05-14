@@ -3,10 +3,10 @@ Revision history for Perl extension {{$dist->name}}
 {{$NEXT}}
 
 0.161350  2016-05-14 12:08:54-07:00 America/Los_Angeles
-    - Update for Dist::Zilla v7 compatibility, for real this time
+    - Update for Dist::Zilla v6 compatibility, for real this time
 
 0.161150  2016-04-24 11:00:49-07:00 America/Los_Angeles
-    - Update for Dist::Zilla v7 compatibility.
+    - Update for Dist::Zilla v6 compatibility.
 
 0.151680  2015-06-17 15:22:02-07:00 America/Los_Angeles
     - use List::Util instead of List::AllUtils+List::MoreUtils
