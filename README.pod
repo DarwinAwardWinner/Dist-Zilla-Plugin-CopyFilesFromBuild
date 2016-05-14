@@ -6,7 +6,7 @@ Dist::Zilla::Plugin::CopyFilesFromBuild - Copy (or move) specific files after bu
 
 =head1 VERSION
 
-version 0.161230
+version 0.161350
 
 =head1 SYNOPSIS
 
