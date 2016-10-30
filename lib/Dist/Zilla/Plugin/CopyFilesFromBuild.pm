@@ -39,8 +39,8 @@ sub after_build {
             next;
         }
         my $src = path($build_root)->child( $path );
+        my $dest = path($self->zilla->root)->child( $path );
         if (-e $src) {
-            my $dest = path($self->zilla->root)->child( $src->basename );
             File::Copy::copy "$src", "$dest"
                 or $self->log_fatal("Unable to copy $src to $dest: $!");
             $self->log("Copied $src to $dest");
@@ -56,8 +56,8 @@ sub after_build {
             next;
         }
         my $src = path($build_root)->child( $path );
+        my $dest = path($self->zilla->root)->child( $path );
         if (-e $src) {
-            my $dest = path($self->zilla->root)->child( $src->basename );
             File::Copy::move "$src", "$dest"
                 or $self->log_fatal("Unable to move $src to $dest: $!");
             $moved_something++;
