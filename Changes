@@ -2,6 +2,11 @@ Revision history for Perl extension {{$dist->name}}
 
 {{$NEXT}}
 
+0.163040  2016-10-30 09:49:27-07:00 America/Los_Angeles
+    - Fix handling of files in subdirectories. These are no longer
+      copied to the root, but rather the corresponding subdirectory of
+      the root.
+
 0.161350  2016-05-14 12:08:54-07:00 America/Los_Angeles
     - Update for Dist::Zilla v6 compatibility, for real this time
 
