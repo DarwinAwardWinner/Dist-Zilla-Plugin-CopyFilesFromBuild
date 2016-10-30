@@ -44,6 +44,8 @@ sub after_build {
             File::Copy::copy "$src", "$dest"
                 or $self->log_fatal("Unable to copy $src to $dest: $!");
             $self->log("Copied $src to $dest");
+        } else {
+            $self->log_fatal("Cannot copy $path from build: file does not exist");
         }
     }
 
@@ -60,6 +62,8 @@ sub after_build {
                 or $self->log_fatal("Unable to move $src to $dest: $!");
             $moved_something++;
             $self->log("Moved $src to $dest");
+        } else {
+            $self->log_fatal("Cannot move $path from build: file does not exist");
         }
     }
 
