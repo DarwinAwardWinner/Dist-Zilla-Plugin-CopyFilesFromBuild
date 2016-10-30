@@ -40,7 +40,7 @@ sub after_build {
         }
         my $src = path($build_root)->child( $path );
         if (-e $src) {
-            my $dest = path($self->zilla->root)->child( $src->basename );
+            my $dest = path($self->zilla->root)->child( $path );
             File::Copy::copy "$src", "$dest"
                 or $self->log_fatal("Unable to copy $src to $dest: $!");
             $self->log("Copied $src to $dest");
