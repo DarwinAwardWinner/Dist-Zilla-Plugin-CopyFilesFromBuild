@@ -10,6 +10,7 @@ use MooseX::Has::Sugar;
 with qw/ Dist::Zilla::Role::AfterBuild /;
 
 use File::Copy ();
+use IO::File;
 use List::Util 1.33 qw( any );
 use Path::Tiny;
 use Set::Scalar;
