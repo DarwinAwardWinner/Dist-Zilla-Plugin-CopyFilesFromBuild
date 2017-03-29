@@ -2,6 +2,9 @@ Revision history for Perl extension {{$dist->name}}
 
 {{$NEXT}}
 
+0.170880  2017-03-29 12:43:04-07:00 America/Los_Angeles
+    - Add a missing use statement to the main module
+
 0.163040  2016-10-30 09:49:27-07:00 America/Los_Angeles
     - Fix handling of files in subdirectories. These are no longer
       copied to the root, but rather the corresponding subdirectory of
