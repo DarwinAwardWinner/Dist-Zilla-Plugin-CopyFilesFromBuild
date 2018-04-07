@@ -1,0 +1,9 @@
+dist: trusty
+sudo: false
+language: perl
+perl:
+  - "5.8"
+  - "5.24"
+  - "dev"
+before_install:
+  - eval $(curl https://travis-perl.github.io/init) --auto
