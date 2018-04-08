@@ -5,11 +5,10 @@ perl:
   - "5.8"                       # Oldest perl
   - "5.26"                      # Current release perl
   - "dev"
-env: AUTHOR_TESTING=1
+env:
+  AUTHOR_TESTING=1
+  COVERAGE=1
 matrix:
-  include:
-    - perl: "5.26"              # Current release perl
-      env: COVERAGE=1
   allow_failures:
     - perl: "dev"
 
